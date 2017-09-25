@@ -1,0 +1,23 @@
+nav {
+  background: white;
+  width: 100%;
+  text-align: center;
+  padding: .3rem;
+}
+
+nav ul li {
+  display: inline-block;
+  list-style: none;
+  padding-right: .1rem;
+}
+
+nav ul li a {
+  padding: 1rem;
+  color: #BD1D65;
+  border-bottom: 5px solid #fff;
+  text-decoration: none;
+}
+
+nav ul li a:hover {
+  border-bottom: 5px solid #BD1D65;
+}

@@ -1,0 +1,51 @@
+.Header__container {
+  height: 80px;
+  background: #5cdcff;
+}
+
+.Header__container--logotipo {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.Header__container--logo {
+  height: 100%;
+  display: inline-block;
+}
+
+.Header__container--logo img {
+  max-width: 100%;
+  height: 100%;
+}
+
+.Header__container--title {
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  padding-bottom: 2rem;
+}
+
+.Header__container--title p {
+  margin-top: 1rem;
+  font-size: 2rem;
+  color: white;
+}
+
+.Header__container--user {
+  text-align: right;
+  padding-top: 1rem;
+}
+
+.Header__container--user .name {
+  display: inline-block;
+}
+
+.Header__container--user .avatar {
+  display: inline-block;
+  width: 50px;
+}
+
+.Header__container--user .avatar img {
+  max-width: 100%;
+}

@@ -1,0 +1,17 @@
+.options {
+  background: white;
+  width: 100%;
+  text-align: left;
+  padding: .3rem;
+}
+
+.options ul li {
+  display: inline-block;
+  list-style: none;
+  padding: .4rem .5rem;
+  border-radius: 10px;
+  border: 2px solid #bd1d65;
+  color: #bd1d65;
+  margin-right: .5rem;
+  cursor: pointer;
+}
