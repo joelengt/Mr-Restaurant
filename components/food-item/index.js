@@ -6,7 +6,7 @@ import _ from 'lodash'
 class FoodItem extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {isAdd: false }
+    this.state = { isAdd: false }
     // This binding is necessary to make `this` work in the callback
     this.handleStateClick = this.handleStateClick.bind(this)
   }

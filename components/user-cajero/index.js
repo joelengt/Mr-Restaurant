@@ -3,6 +3,21 @@ import stylesheet from './style.scss'
 import FoodList from '../food-list'
 
 class Cajero extends React.Component {
+  constructor(props) {
+    super(props)
+    // This binding is necessary to make `this` work in the callback
+    this.handleNextButton = this.handleNextButton.bind(this)
+
+    this.state = { nextButton: true }
+  }
+
+  handleNextButton() {
+    console.log('Event click, next')
+    this.setState(prevState => ({
+      nextButton: !prevState.nextButton
+    }))
+  }
+
   render() {
     return (
       <div className="Cajero">
@@ -24,7 +39,8 @@ class Cajero extends React.Component {
         </div>
         <div className="Cajero__actions">
         <button type="button" className="btn btn-danger">Cancelar</button>
-        <button type="button" className="btn btn-success">Siguiente</button>
+        <button onClick={ this.handleNextButton } type="button" className="btn btn-success">Siguiente</button>
+        <p>{ this.state.nextButton ? 'ON' : 'OFF' }</p>
         </div>
       </div>
     )
