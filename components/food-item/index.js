@@ -40,8 +40,6 @@ class FoodItem extends React.Component {
         isAdd: !prevState.isAdd
       }))
     }
-
-    console.log("current result ->>", this.props.getListFood())
   }
 
   render() {

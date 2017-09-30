@@ -1,0 +1,34 @@
+.Cajero__list {
+  background: white;
+}
+
+.Cajero__list-container {
+  display: block;
+  text-align: left;
+}
+
+.Cajero__list-item {
+  width: 40%;
+  padding: 2rem;
+  margin: 1rem;
+  display: inline-block;
+  border: 1px solid #efefef;
+  border-radius: 10px;
+  text-align: left;
+}
+
+.Cajero__list-item--cover {
+  width: 20%;
+  display: inline-block;
+}
+
+.Cajero__list-item--cover img {
+  max-width: 100%;
+}
+
+.Cajero__list-item--details {
+  vertical-align: top;
+  width: 60%;
+  display: inline-block;
+  padding-left: 1rem;
+}

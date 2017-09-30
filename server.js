@@ -11,14 +11,11 @@ app.prepare()
   .then(() => {
     const server = express()
 
-    server.get('/fruit/:id', (req, res) => {
+    server.get('/plataform/cajero/step-2/:id', (req, res) => {
       let params = req.params
       let query = req.query
 
-      console.log('params', params)
-      console.log('query', query)
-
-      return app.render(req, res, '/fruit-item', Object.assign(params, query))
+      return app.render(req, res, '/cajero-step2', Object.assign(params, query))
     })
 
     server.get('*', (req, res) => {
