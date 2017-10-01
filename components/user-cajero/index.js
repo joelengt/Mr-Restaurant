@@ -55,7 +55,7 @@ class Cajero extends React.Component {
         console.log('ORDER CREATION >>', result)
 
         // reset listFood
-        this.setListFood([])
+        // this.setListFood([])
 
         this.setState(prevState => ({
           nextButton: true

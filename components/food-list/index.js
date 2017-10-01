@@ -36,7 +36,7 @@ class FoodList extends React.Component {
 
     request(options)
     .then((result) => {
-      console.log('Result API>>', typeof result)
+      console.log('Result API>>', result)
 
       this.setState(prevState => ({
         listFood: result.data.items

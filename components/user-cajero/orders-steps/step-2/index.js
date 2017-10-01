@@ -11,23 +11,33 @@ class Cajero extends React.Component {
     this.handleNextButton = this.handleNextButton.bind(this)
     this.handleChange = this.handleChange.bind(this);
 
-    this.state = { nextButton: true, name: '', dni: '', payment: ''}
+    this.state = { nextButton: false, name: '', dni: '', payment: ''}
   }
 
   async handleNextButton() {
     console.log('FINAL DATO to send')
+    let OrderID = '59cfecdcde6c07b4dcf92218'
+
     try {
-      let data = {
-        name: this.state.name,
-        dni: this.state.dni,
-        payment: this.state.payment,
-      };
+      let clientData = {
+        fullName: this.state.name,
+        dni: this.state.dni
+      }
 
-      this.setState(prevState => ({
-        nextButton: true
-      }))
+      // create client
+      let clientResult = await requestHTTP(`${this.URI}/api/clients`, 'post', clientData)
+      console.log('Client >>', clientResult.data.item)
+      let client = clientResult.data.item
 
-      console.log(data)
+      // update order
+      let payload = {
+        paymentMethod: this.state.payment,
+        client: client._id
+      }
+
+      let result = await requestHTTP(`${this.URI}/api/orders/${OrderID}?_method=put`, 'post', payload)
+      console.log('ORDER CREATION >>', result)
+
     } catch (err) {
       console.log('Error API', err)
     }
@@ -106,7 +116,6 @@ class Cajero extends React.Component {
           <button className="btn btn-primary">Back</button>
           <button className="btn btn-danger">Cancelar</button>
           <button onClick={ this.handleNextButton } className="btn btn-success">Siguiente</button>
-          <p>{ this.state.nextButton ? 'Enviado' : 'Not' }</p>
         </div>
       </div>
     )
