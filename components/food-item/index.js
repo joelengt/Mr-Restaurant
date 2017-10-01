@@ -9,7 +9,7 @@ class FoodItem extends React.Component {
     super(props)
     this.URI = 'http://localhost:3000'
 
-    this.state = { isAdd: false, cant: 2, isEnabled: this.props.isEnabled, currentValue: this.props.isEnabled }
+    this.state = { isAdd: false, cant: 2, isEnabled: this.props.isEnabled, currentValue: this.props.isEnabled, showDetails: false }
     // This binding is necessary to make `this` work in the callback
     this.handleStateClick = this.handleStateClick.bind(this)
     this.isEnabledToCant = this.isEnabledToCant.bind(this)
@@ -17,6 +17,7 @@ class FoodItem extends React.Component {
     this.isEnabledToSale = this.isEnabledToSale.bind(this)
     this.handleFoodStateUpdateClick = this.handleFoodStateUpdateClick.bind(this)
     this.isAdminToUpdateState = this.isAdminToUpdateState.bind(this)
+    this.eventShowDetails = this.eventShowDetails.bind(this)
 
     this.userType = this.props.userType
   }
@@ -131,6 +132,12 @@ class FoodItem extends React.Component {
     }
   }
 
+  eventShowDetails() {
+    this.setState(prevState => ({
+      showDetails: !prevState.showDetails
+    }))
+  }
+
   userActions() {
     if (this.userType === 'chef') {
       return (
@@ -143,6 +150,7 @@ class FoodItem extends React.Component {
       return (
         <div>
           <button onClick={ this.eventShowDetails } type="button" className="btn btn-primary">Detalles</button>
+          <p>Current: { this.state.showDetails ? 'ON': 'OFF'}</p>
         </div>
       )
     }
