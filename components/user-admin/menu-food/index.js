@@ -1,10 +1,10 @@
 import React from 'react'
 import stylesheet from './style.scss'
-import FoodList from '../food-list'
+import FoodList from '../../food-list'
 import request from 'request-promise'
-import {requestHTTP} from '../../utils'
+import {requestHTTP} from '../../../utils'
 
-class Cajero extends React.Component {
+class Menu extends React.Component {
   constructor(props) {
     super(props)
     // This binding is necessary to make `this` work in the callback
@@ -68,31 +68,17 @@ class Cajero extends React.Component {
 
   render() {
     return (
-      <div className="Cajero">
+      <div className="Menu">
         <style dangerouslySetInnerHTML={{__html: stylesheet}}/>
-        <div className="Cajero__top">
-         <div>
-           <h2>Cajero - step1</h2>
-         </div>
-         <div>
-           <p>Items: 6</p>
-           <p>Total: S/36.00</p>
-         </div>
-        </div>
-        <div className="Cajero__list">
-          <div className="Cajero__list-container">
-            <h2>Menu del día</h2>
-            <FoodList getListFood={ this.getListFood } setListFood={ this.setListFood } userType="chef"/>
+        <div className="Menu__list">
+          <div className="Menu__list-container">
+            <h2>Menu</h2>
+            <FoodList getListFood={ this.getListFood } setListFood={ this.setListFood } userType="admin"/>
           </div>
-        </div>
-        <div className="Cajero__actions">
-        <button type="button" className="btn btn-danger">Cancelar</button>
-        <button onClick={ this.handleNextButton } type="button" className="btn btn-success">Siguiente</button>
-        <p>{ this.state.nextButton ? 'Enviado' : 'Not' }</p>
         </div>
       </div>
     )
   }
 }
 
-export default Cajero
+export default Menu

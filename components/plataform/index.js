@@ -9,7 +9,7 @@ let userOptions = ['cajero', 'chef', 'admin']
 
 class Plataform extends React.Component {
   getUserView () {
-    let userView = userOptions[0]
+    let userView = userOptions[2]
 
     if (userView === 'cajero') {
       return (<UserCajero/>)

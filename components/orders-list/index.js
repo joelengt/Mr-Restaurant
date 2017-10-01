@@ -1,11 +1,11 @@
 import React from 'react'
-import FoodItem from '../food-item'
+import OrderItem from '../order-item'
 import stylesheet from './style.scss'
 import request from 'request-promise'
 import Promise from 'bluebird'
 import {requestHTTP} from '../../utils'
 
-class FoodList extends React.Component {
+class OrderList extends React.Component {
   constructor(props) {
     super(props)
 
@@ -15,7 +15,7 @@ class FoodList extends React.Component {
     this.setListFood = this.setListFood.bind(this)
     this.getListFood = this.getListFood.bind(this)
 
-    this.state = { listFood: [] }
+    this.state = { listOrders: [] }
 
   }
 
@@ -30,7 +30,7 @@ class FoodList extends React.Component {
 
   componentDidMount () {
     var options = {
-      uri: `${this.URI}/api/menu`,
+      uri: `${this.URI}/api/orders`,
       json: true
     };
 
@@ -39,7 +39,7 @@ class FoodList extends React.Component {
       console.log('Result API>>', result)
 
       this.setState(prevState => ({
-        listFood: result.data.items
+        listOrders: result.data.items
       }))
 
     })
@@ -50,20 +50,20 @@ class FoodList extends React.Component {
 
   getData(data) {
     let response = data.map((element) => {
-      return <FoodItem id={element._id} key={element._id} name={element.name} description={element.description} photo={element.photo} price={element.price} isEnabled={element.isEnabled} getListFood={ this.getListFood } setListFood={ this.setListFood } userType={this.props.userType}/>
+      return <OrderItem id={element._id} key={element._id} client={element.client} summary={element.summary} food={element.foods} userType={this.props.userType}/>
     })
 
     return response
   }
 
   render() {
-    let elements = this.state.listFood
+    let elements = this.state.listOrders
 
     if (!elements.length) {
       return (<div>Cargando...</div>)
     } else {
       return (
-        <div className="FoodList">
+        <div className="OrderList">
           <style dangerouslySetInnerHTML={{__html: stylesheet}}/>
           { this.getData(elements) }
         </div>
@@ -72,4 +72,4 @@ class FoodList extends React.Component {
   }
 }
 
-export default FoodList
+export default OrderList
