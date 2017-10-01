@@ -153,7 +153,7 @@ class FoodItem extends React.Component {
       return (
         <div>
           <form>
-            <select name="selectState" onChange={ this.handleChangeState } value={this.state.isEnabled ? 'Disponible': 'NoDisponible'}>
+            <select name="selectState" onChange={ this.handleChangeState } value={this.state.isEnabledm ? 'Disponible': 'NoDisponible'}>
               <option>
                 Disponible
               </option>
