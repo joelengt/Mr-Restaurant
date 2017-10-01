@@ -4,6 +4,8 @@ import Link from 'next/link'
 import _ from 'lodash'
 import {requestHTTP} from '../../utils'
 
+let wayView = { mainList: 'mainList', details: 'details', edit: 'edit' }
+
 class UserItem extends React.Component {
   constructor(props) {
     super(props)
@@ -16,9 +18,19 @@ class UserItem extends React.Component {
   }
 
   eventShowDetails() {
+    // Update button click state
     this.setState(prevState => ({
-      showDetails: !prevState.showDetails
+      showDetails: !prevState.showDetails,
     }))
+
+    console.log('ELEMENET ID', this.props.id)
+
+    // Update view state
+    this.props.updateViewState(wayView.details)
+
+    // Update content
+    this.props.updateUserDetails(this.props.id)
+      
   }
 
   render() {
@@ -29,7 +41,7 @@ class UserItem extends React.Component {
         </div>
         <div className="Cajero__list-item--details">
           <h2 className="title">
-            { this.props.name } { this.props.lastName }
+            { this.props.id } - { this.props.name } { this.props.lastName }
           </h2>
           <div>
             { this.props.userAccessIcon } - { this.props.userAccessTitle }
