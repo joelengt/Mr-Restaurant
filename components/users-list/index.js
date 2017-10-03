@@ -23,7 +23,7 @@ class UserList extends React.Component {
     }))
   }
 
-   updateUserDetails (userID) {
+  updateUserDetails (userID) {
     this.setState(prevState => ({
       currentUserDetails: userID
     }))

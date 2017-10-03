@@ -4,18 +4,22 @@ import stylesheet from './style.scss'
 import request from 'request-promise'
 import Promise from 'bluebird'
 import {requestHTTP} from '../../utils'
+import FoodDetails from '../food-details'
+
+let wayView = { mainList: 'mainList', details: 'details', edit: 'edit' }
 
 class FoodList extends React.Component {
   constructor(props) {
     super(props)
 
     this.URI = 'http://localhost:3000'
+    this.state = { listFood: [], currentView: wayView.mainList, currentFoodDetails: '' }
 
     // This binding is necessary to make `this` work in the callback
     this.setListFood = this.setListFood.bind(this)
     this.getListFood = this.getListFood.bind(this)
-
-    this.state = { listFood: [] }
+    this.updateViewState = this.updateViewState.bind(this)
+    this.updateFoodDetails = this.updateFoodDetails.bind(this)
 
   }
 
@@ -26,6 +30,18 @@ class FoodList extends React.Component {
 
   getListFood() {
     return this.props.getListFood()
+  }
+
+  updateViewState (viewState) {
+    this.setState(prevState => ({
+      currentView: viewState
+    }))
+  }
+
+  updateFoodDetails (foodID) {
+    this.setState(prevState => ({
+      currentFoodDetails: foodID
+    }))
   }
 
   componentDidMount () {
@@ -50,7 +66,7 @@ class FoodList extends React.Component {
 
   getData(data) {
     let response = data.map((element) => {
-      return <FoodItem id={element._id} key={element._id} name={element.name} description={element.description} photo={element.photo} price={element.price} isEnabled={element.isEnabled} getListFood={ this.getListFood } setListFood={ this.setListFood } userType={this.props.userType}/>
+      return <FoodItem updateViewState={this.updateViewState} updateFoodDetails={this.updateFoodDetails} id={element._id} key={element._id} name={element.name} description={element.description} photo={element.photo} price={element.price} isEnabled={element.isEnabled} getListFood={ this.getListFood } setListFood={ this.setListFood } userType={this.props.userType}/>
     })
 
     return response
@@ -59,16 +75,39 @@ class FoodList extends React.Component {
   render() {
     let elements = this.state.listFood
 
-    if (!elements.length) {
-      return (<div>Cargando...</div>)
-    } else {
-      return (
-        <div className="FoodList">
-          <style dangerouslySetInnerHTML={{__html: stylesheet}}/>
-          { this.getData(elements) }
-        </div>
-      )
+    switch (this.state.currentView) {
+      case wayView.mainList:
+        if (!elements.length) {
+          return (<div>Cargando...</div>)
+        } else {
+          return (
+            <div className="FoodList">
+              <style dangerouslySetInnerHTML={{__html: stylesheet}}/>
+              { this.getData(elements) }
+            </div>
+          )
+        }
+        break;
+
+      case wayView.details:
+        let foodID = this.state.currentFoodDetails
+        if (!foodID) {
+          return <div>User Not Found</div>
+        }
+        return (<FoodDetails id={foodID}/>)
+        break;
+
+      case wayView.edit:
+        return (
+          <article className="Cajero__list-item">
+            <div className="Cajero__list-item--details">
+              <p>Edit</p>
+            </div>
+          </article>
+        )
+        break;
     }
+
   }
 }
 
