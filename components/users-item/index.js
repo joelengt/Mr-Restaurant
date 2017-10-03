@@ -48,7 +48,6 @@ class UserItem extends React.Component {
           </div>
           <div>
             <button onClick={ this.eventShowDetails } type="button" className="btn btn-primary">Detalles</button>
-            <p>Click: { this.state.showDetails ? 'ON': 'OFF' }</p>
           </div>
         </div>
       </article>

@@ -14,6 +14,10 @@ class UserItem extends React.Component {
     this.URI = 'http://localhost:3000'
 
     this.state = { showDetails: false, user: {} }
+
+    this.eventEdit = this.eventEdit.bind(this)
+    this.eventDelete = this.eventDelete.bind(this)
+    
   }
 
   componentDidMount () {
@@ -36,6 +40,15 @@ class UserItem extends React.Component {
     });
   }
 
+  eventEdit() {
+    // Update view state
+    this.props.updateViewState(wayView.edit)
+  }
+
+  eventDelete() {
+
+  }
+
   render() {
     let user = this.state.user
     return (
@@ -53,8 +66,8 @@ class UserItem extends React.Component {
           <p>phone: { user.phone } </p>
           <p>Creado: { user.created_at }</p>
           <div>
-            <button type="button" className="btn btn-primary">Edit</button>
-            <button type="button" className="btn btn-danger">Delete</button>
+            <button onClick={ this.eventEdit } type="button" className="btn btn-primary">Edit</button>
+            <button onClick={ this.eventDelete } type="button" className="btn btn-danger">Delete</button>
           </div>
         </div>
       </article>

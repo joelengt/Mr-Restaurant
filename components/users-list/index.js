@@ -5,6 +5,7 @@ import request from 'request-promise'
 import Promise from 'bluebird'
 import {requestHTTP} from '../../utils'
 import UserDetails from '../users-details'
+import UserEdit from '../users-edit'
 
 let wayView = { mainList: 'mainList', details: 'details', edit: 'edit' }
 
@@ -59,6 +60,7 @@ class UserList extends React.Component {
 
   render() {
     let elements = this.state.userList
+    let userID = this.state.currentUserDetails
 
     switch (this.state.currentView) {
       case wayView.mainList:
@@ -75,21 +77,17 @@ class UserList extends React.Component {
         break;
 
       case wayView.details:
-        let userID = this.state.currentUserDetails
         if (!userID) {
           return <div>User Not Found</div>
         }
-        return (<UserDetails id={userID}/>)
+        return (<UserDetails id={userID} updateViewState={this.updateViewState}/>)
         break;
 
       case wayView.edit:
-        return (
-          <article className="Cajero__list-item">
-            <div className="Cajero__list-item--details">
-              <p>Edit</p>
-            </div>
-          </article>
-        )
+        if (!userID) {
+          return <div>User Not Found</div>
+        }
+        return (<UserEdit id={userID}/>)
         break;
     }
 
