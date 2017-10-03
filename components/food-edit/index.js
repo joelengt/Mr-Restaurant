@@ -8,12 +8,12 @@ import request from 'request-promise'
 
 let wayView = { mainList: 'mainList', details: 'details', edit: 'edit' }
 
-class UserEdit extends React.Component {
+class FoodEdit extends React.Component {
   constructor(props) {
     super(props)
     this.URI = 'http://localhost:3000'
 
-    this.state = { showDetails: false, user: {}, name: '', lastName: '', email: '', phone: '', dni: '', photo: ''}
+    this.state = { showDetails: false, user: {}, name: '', description: '', price: '', photo: '' }
 
     this.handleChange = this.handleChange.bind(this)
     this.updateUserData = this.updateUserData.bind(this)
@@ -21,7 +21,7 @@ class UserEdit extends React.Component {
 
   componentDidMount () {
     var options = {
-      uri: `${this.URI}/api/users/${this.props.id}`,
+      uri: `${this.URI}/api/menu/${this.props.id}`,
       json: true
     };
 
@@ -37,10 +37,8 @@ class UserEdit extends React.Component {
 
       this.setState(prevState => ({
         name: user.name,
-        lastName: user.last_name,
-        email: user.email,
-        phone: user.phone,
-        dni: user.dni,
+        description: user.description,
+        price: user.price,
         photo: user.photo
       }))
 
@@ -57,17 +55,11 @@ class UserEdit extends React.Component {
     if (e.target.name === 'name') {
       this.setState({ name: e.target.value })
 
-    } else if (e.target.name === 'lastName') {
-      this.setState({ lastName: e.target.value })
+    } else if (e.target.name === 'description') {
+      this.setState({ description: e.target.value })
 
     } else if (e.target.name === 'email') {
       this.setState({ email: e.target.value })
-
-    } else if (e.target.name === 'phone') {
-      this.setState({ phone: e.target.value })
-
-    } else if (e.target.name === 'dni') {
-      this.setState({ dni: e.target.value })
 
     } else if (e.target.name === 'photo') {
       this.setState({ photo: e.target.value })
@@ -82,16 +74,14 @@ class UserEdit extends React.Component {
 
       let payload = {
         name: this.state.name,
-        last_name: this.state.lastName,
-        email: this.state.email,
-        phone: this.state.phone,
-        dni: this.state.dni,
+        description: this.state.description,
+        price: this.state.price,
         photo: this.state.photo
       }
 
       console.log('USER DATA', payload)
 
-      let result = await requestHTTP(`${this.URI}/api/users/${this.props.id}?_method=put`, 'post', payload)
+      let result = await requestHTTP(`${this.URI}/api/menu/${this.props.id}?_method=put`, 'post', payload)
       console.log('ORDER CREATION >>', result)
 
     } catch (err) {
@@ -110,20 +100,12 @@ class UserEdit extends React.Component {
               <input type="text" className="form-control" name="name" id="name" aria-describedby="nameHelp" placeholder="Ingresar el nombre" value={this.state.name} onChange={this.handleChange}/>
             </div>
             <div className="form-group">
-              <label for="lastName">Apellido</label>
-              <input type="text" className="form-control" name="lastName" id="lastName" aria-describedby="nameHelp" placeholder="Ingresar el Apellido" value={this.state.lastName} onChange={this.handleChange}/>
+              <label for="description">Description</label>
+              <input type="text" className="form-control" name="description" id="description" aria-describedby="nameHelp" placeholder="Ingresar la descripcion" value={this.state.description} onChange={this.handleChange}/>
             </div>
             <div className="form-group">
-              <label for="email">Email</label>
-              <input type="email" className="form-control" name="email" id="email" aria-describedby="nameHelp" placeholder="Ingresar el email" value={this.state.email} onChange={this.handleChange}/>
-            </div>
-            <div className="form-group">
-              <label for="phone">phone</label>
-              <input type="text" className="form-control" name="phone" id="phone" aria-describedby="nameHelp" placeholder="Ingresar el telefono" value={this.state.phone} onChange={this.handleChange}/>
-            </div>
-            <div className="form-group">
-              <label for="dni">DNI</label>
-              <input type="number" className="form-control" name="dni" id="dni" aria-describedby="nameHelp" placeholder="Ingresar el dni" value={this.state.dni} onChange={this.handleChange}/>
+              <label for="price">price</label>
+              <input type="number" className="form-control" name="price" id="price" aria-describedby="nameHelp" placeholder="Ingresar el price" value={this.state.price} onChange={this.handleChange}/>
             </div>
             <div className="form-group">
               <label for="photo">photo</label>
@@ -139,4 +121,4 @@ class UserEdit extends React.Component {
   }
 }
 
-export default UserEdit
+export default FoodEdit

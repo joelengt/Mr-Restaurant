@@ -5,6 +5,7 @@ import request from 'request-promise'
 import Promise from 'bluebird'
 import {requestHTTP} from '../../utils'
 import FoodDetails from '../food-details'
+import FoodEdit from '../food-edit'
 
 let wayView = { mainList: 'mainList', details: 'details', edit: 'edit' }
 
@@ -74,6 +75,7 @@ class FoodList extends React.Component {
 
   render() {
     let elements = this.state.listFood
+    let foodID = this.state.currentFoodDetails
 
     switch (this.state.currentView) {
       case wayView.mainList:
@@ -90,21 +92,17 @@ class FoodList extends React.Component {
         break;
 
       case wayView.details:
-        let foodID = this.state.currentFoodDetails
         if (!foodID) {
           return <div>User Not Found</div>
         }
-        return (<FoodDetails id={foodID}/>)
+        return (<FoodDetails id={foodID} updateViewState={this.updateViewState}/>)
         break;
 
       case wayView.edit:
-        return (
-          <article className="Cajero__list-item">
-            <div className="Cajero__list-item--details">
-              <p>Edit</p>
-            </div>
-          </article>
-        )
+        if (!foodID) {
+          return <div>User Not Found</div>
+        }
+        return (<FoodEdit id={foodID}/>)
         break;
     }
 

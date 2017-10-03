@@ -196,7 +196,7 @@ class FoodItem extends React.Component {
     return (
       <article className="Cajero__list-item">
         <div className="Cajero__list-item--cover">
-          <img src="http://www.mujeremprendedoralac.org/dev/wp-content/uploads/2015/10/cropped-ICONOpeque%C3%B1o.png"></img>
+          <img src={this.props.photo}></img>
         </div>
         <div className="Cajero__list-item--details">
           <h2 className="title">

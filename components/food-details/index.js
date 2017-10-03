@@ -12,7 +12,10 @@ class FoodDetails extends React.Component {
     super(props)
     this.URI = 'http://localhost:3000'
 
-    this.state = { showDetails: false, food: {} }
+    this.state = { showDetails: false, food: {}, isDeleted: false }
+
+    this.eventEdit = this.eventEdit.bind(this)
+    this.eventDelete = this.eventDelete.bind(this)
   }
 
   componentDidMount () {
@@ -35,28 +38,58 @@ class FoodDetails extends React.Component {
     });
   }
 
+  eventEdit() {
+    // Update view state
+    console.log('EDIT >>')
+    this.props.updateViewState(wayView.edit)
+  }
+
+  async eventDelete() {
+    try {
+      console.log('USER DATA to delete ==> ', this.props.id)
+
+      let result = await requestHTTP(`${this.URI}/api/menu/${this.props.id}?_method=delete`, 'post')
+      console.log('ORDER CREATION >>', result)
+
+      this.setState(prevState => ({
+        isDeleted: true
+      }))
+
+    } catch (err) {
+      console.log('Error API', err)
+    }
+  }
+
   render() {
     let food = this.state.food
-    return (
-      <article className="Cajero__list-item">
-        <div className="Cajero__list-item--details">
-          <div>
-            <div>
-              <img src={ food.photo }></img>
+
+    if (!this.state.isDeleted) {
+        return (
+          <article className="Cajero__list-item">
+            <div className="Cajero__list-item--details">
+              <div>
+                <div>
+                  <img src={ food.photo }></img>
+                </div>
+                <h2>id: { food._id }</h2>
+                <p>{ food.name }</p>
+                <p>{ food.description }</p>
+                <p>S/{ food.price }</p>
+                <p>{ food.fechaCreada }</p>
+              </div>
+              <div>
+                <button onClick={ this.eventEdit } type="button" className="btn btn-primary">Edit</button>
+                <button onClick={ this.eventDelete } type="button" className="btn btn-danger">Delete</button>
+              </div>
             </div>
-            <h2>id: { food._id }</h2>
-            <p>{ food.name }</p>
-            <p>{ food.description }</p>
-            <p>S/{ food.price }</p>
-            <p>{ food.fechaCreada }</p>
-          </div>
-          <div>
-            <button type="button" className="btn btn-primary">Edit</button>
-            <button type="button" className="btn btn-danger">Delete</button>
-          </div>
-        </div>
-      </article>
-    )
+          </article>
+      )
+    } else {
+      return (
+        <div>Food Deleted</div>
+      )
+    }
+
   }
 }
 
