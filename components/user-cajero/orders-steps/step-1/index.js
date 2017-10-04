@@ -59,10 +59,14 @@ class Cajero extends React.Component {
         // reset listFood
         // this.setListFood([])
 
+        // update orders currentOrder
+        this.props.updateCurrentOrder(result.data.item._id)
+
         this.setState(prevState => ({
           nextButton: true
         }))
 
+        // update view - step 2
         this.props.currentStep(waySteps.step2)
       }
     } catch (err) {

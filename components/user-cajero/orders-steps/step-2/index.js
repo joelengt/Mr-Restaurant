@@ -20,7 +20,7 @@ class Cajero extends React.Component {
 
   async handleNextButton() {
     console.log('FINAL DATO to send')
-    let OrderID = '59cfe17444dfabb484af6ea0'
+    let OrderID = this.props.getCurrentOrder()
 
     try {
       let clientData = {
@@ -73,7 +73,7 @@ class Cajero extends React.Component {
 
   async handleCancel() {
     console.log('FINAL DATO to send')
-    let OrderID = '59cfe17444dfabb484af6ea0'
+    let OrderID = this.props.getCurrentOrder()
 
     try {
       let result = await requestHTTP(`${this.URI}/api/orders/${OrderID}?_method=delete`, 'post')

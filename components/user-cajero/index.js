@@ -17,8 +17,10 @@ class Cajero extends React.Component {
   
     this.eventCurrentStep = this.eventCurrentStep.bind(this)
     this.updateCurrentStep = this.updateCurrentStep.bind(this)
+    this.getCurrentOrder = this.getCurrentOrder.bind(this)
+    this.updateCurrentOrder = this.updateCurrentOrder.bind(this)
 
-    this.state = { nextButton: false, currentStep: waySteps.step1 }
+    this.state = { nextButton: false, currentStep: waySteps.step1, currentOrder: '' }
   }
 
   updateCurrentStep(step) {
@@ -27,19 +29,28 @@ class Cajero extends React.Component {
     }))
   }
 
+  updateCurrentOrder(orderID) {
+     this.setState(prevState => ({
+      currentOrder: orderID
+    }))
+  }
+
+  getCurrentOrder() {
+    return this.state.currentOrder
+  }
+
   eventCurrentStep() {
     switch (this.state.currentStep) {
       case waySteps.step1:
-        console.log('STEP 1');
-        return (<Step1 currentStep={this.updateCurrentStep}/>)
+        return (<Step1 currentStep={this.updateCurrentStep} updateCurrentOrder={this.updateCurrentOrder} getCurrentOrder={this.getCurrentOrder}/>)
         break;
 
       case waySteps.step2:
-        return (<Step2 currentStep={this.updateCurrentStep}/>)
+        return (<Step2 currentStep={this.updateCurrentStep} updateCurrentOrder={this.updateCurrentOrder} getCurrentOrder={this.getCurrentOrder}/>)
         break;
 
       case waySteps.step3:
-        return (<Step3 currentStep={this.updateCurrentStep}/>)
+        return (<Step3 currentStep={this.updateCurrentStep} updateCurrentOrder={this.updateCurrentOrder} getCurrentOrder={this.getCurrentOrder}/>)
         break;
     }
   }
