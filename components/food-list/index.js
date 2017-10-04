@@ -23,6 +23,8 @@ class FoodList extends React.Component {
     this.updateViewState = this.updateViewState.bind(this)
     this.updateFoodDetails = this.updateFoodDetails.bind(this)
     this.eventCreateForm = this.eventCreateForm.bind(this)
+    this.isAdminToCreateFood = this.isAdminToCreateFood.bind(this)
+
   }
 
   setListFood(array) {
@@ -78,6 +80,16 @@ class FoodList extends React.Component {
     this.updateViewState(wayView.create)
   }
 
+  isAdminToCreateFood() {
+    if (this.props.userType === 'admin') {
+      return (
+        <div>
+          <button onClick={ this.eventCreateForm } type="button" className="btn btn-success">New Food</button>
+        </div>
+      )
+    }
+  }
+
   render() {
     let elements = this.state.listFood
     let foodID = this.state.currentFoodDetails
@@ -90,9 +102,7 @@ class FoodList extends React.Component {
           return (
             <div className="FoodList">
               <style dangerouslySetInnerHTML={{__html: stylesheet}}/>
-              <div>
-                <button onClick={ this.eventCreateForm } type="button" className="btn btn-success">New Food</button>
-              </div>
+              { this.isAdminToCreateFood() }
               <div>
                 { this.getData(elements) }
               </div>

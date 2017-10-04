@@ -53,7 +53,9 @@ class OrderItem extends React.Component {
     console.log('Food list!!', FoodList)
     let result = FoodList.map((element) => {
       let food = element.item
-      return <FootItem id={food._id} key={food._id} name={food.name} price={food.price} cant={element.cant} userType={this.props.userType}/>
+      if (food) {
+        return <FootItem id={food._id} key={food._id} name={food.name} price={food.price} cant={element.cant} userType={this.props.userType}/>
+      }
     })
 
     return result
