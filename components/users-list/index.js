@@ -6,8 +6,9 @@ import Promise from 'bluebird'
 import {requestHTTP} from '../../utils'
 import UserDetails from '../users-details'
 import UserEdit from '../users-edit'
+import UserCreate from '../users-create'
 
-let wayView = { mainList: 'mainList', details: 'details', edit: 'edit' }
+let wayView = { mainList: 'mainList', details: 'details', edit: 'edit', create: 'create' }
 
 class UserList extends React.Component {
   constructor(props) {
@@ -16,6 +17,7 @@ class UserList extends React.Component {
     this.state = { userList: [], currentView: wayView.mainList, currentUserDetails: 0 }
     this.updateViewState = this.updateViewState.bind(this)
     this.updateUserDetails = this.updateUserDetails.bind(this)
+    this.eventCreateForm = this.eventCreateForm.bind(this)
   }
 
   updateViewState (viewState) {
@@ -57,6 +59,10 @@ class UserList extends React.Component {
 
     return response
   }
+  
+  eventCreateForm() {
+    this.updateViewState(wayView.create)
+  }
 
   render() {
     let elements = this.state.userList
@@ -70,7 +76,12 @@ class UserList extends React.Component {
           return (
             <div className="UserList">
               <style dangerouslySetInnerHTML={{__html: stylesheet}}/>
-              { this.getData(elements) }
+              <div>
+                <button onClick={ this.eventCreateForm } type="button" className="btn btn-success">New User</button>
+              </div>
+              <div>
+                { this.getData(elements) }
+              </div>
             </div>
           )
         }
@@ -88,6 +99,10 @@ class UserList extends React.Component {
           return <div>User Not Found</div>
         }
         return (<UserEdit id={userID}/>)
+        break;
+
+      case wayView.create:
+        return (<UserCreate/>)
         break;
     }
 
