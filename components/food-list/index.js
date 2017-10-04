@@ -6,8 +6,9 @@ import Promise from 'bluebird'
 import {requestHTTP} from '../../utils'
 import FoodDetails from '../food-details'
 import FoodEdit from '../food-edit'
+import FoodCreate from '../food-create'
 
-let wayView = { mainList: 'mainList', details: 'details', edit: 'edit' }
+let wayView = { mainList: 'mainList', details: 'details', edit: 'edit', create: 'create' }
 
 class FoodList extends React.Component {
   constructor(props) {
@@ -21,7 +22,7 @@ class FoodList extends React.Component {
     this.getListFood = this.getListFood.bind(this)
     this.updateViewState = this.updateViewState.bind(this)
     this.updateFoodDetails = this.updateFoodDetails.bind(this)
-
+    this.eventCreateForm = this.eventCreateForm.bind(this)
   }
 
   setListFood(array) {
@@ -73,6 +74,10 @@ class FoodList extends React.Component {
     return response
   }
 
+  eventCreateForm() {
+    this.updateViewState(wayView.create)
+  }
+
   render() {
     let elements = this.state.listFood
     let foodID = this.state.currentFoodDetails
@@ -85,7 +90,12 @@ class FoodList extends React.Component {
           return (
             <div className="FoodList">
               <style dangerouslySetInnerHTML={{__html: stylesheet}}/>
-              { this.getData(elements) }
+              <div>
+                <button onClick={ this.eventCreateForm } type="button" className="btn btn-success">New Food</button>
+              </div>
+              <div>
+                { this.getData(elements) }
+              </div>
             </div>
           )
         }
@@ -103,6 +113,10 @@ class FoodList extends React.Component {
           return <div>User Not Found</div>
         }
         return (<FoodEdit id={foodID}/>)
+        break;
+
+      case wayView.create:
+        return (<FoodCreate/>)
         break;
     }
 

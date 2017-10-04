@@ -72,7 +72,7 @@ class Menu extends React.Component {
         <style dangerouslySetInnerHTML={{__html: stylesheet}}/>
         <div className="Menu__list">
           <div className="Menu__list-container">
-            <h2>Menu</h2>
+              <h2>Menu</h2>
             <FoodList getListFood={ this.getListFood } setListFood={ this.setListFood } userType="admin"/>
           </div>
         </div>

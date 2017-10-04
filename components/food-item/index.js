@@ -162,7 +162,6 @@ class FoodItem extends React.Component {
       return (
         <div>
           <button onClick={ this.eventShowDetails } type="button" className="btn btn-primary">Detalles</button>
-          <p>Current: { this.state.showDetails ? 'ON': 'OFF'}</p>
         </div>
       )
     }

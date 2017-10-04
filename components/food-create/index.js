@@ -8,7 +8,7 @@ import request from 'request-promise'
 
 let wayView = { mainList: 'mainList', details: 'details', edit: 'edit' }
 
-class FoodEdit extends React.Component {
+class FoodCreate extends React.Component {
   constructor(props) {
     super(props)
     this.URI = 'http://localhost:3000'
@@ -17,35 +17,6 @@ class FoodEdit extends React.Component {
 
     this.handleChange = this.handleChange.bind(this)
     this.updateUserData = this.updateUserData.bind(this)
-  }
-
-  componentDidMount () {
-    var options = {
-      uri: `${this.URI}/api/menu/${this.props.id}`,
-      json: true
-    };
-
-    request(options)
-    .then((result) => {
-      console.log('Result API>>', result)
-
-      let user = result.data.item
-
-      this.setState(prevState => ({
-        user: user
-      }))
-
-      this.setState(prevState => ({
-        name: user.name,
-        description: user.description,
-        price: user.price,
-        photo: user.photo
-      }))
-
-    })
-    .catch((err) => {
-        console.log('Error API', err)
-    });
   }
 
   handleChange(e) {
@@ -84,8 +55,24 @@ class FoodEdit extends React.Component {
 
       console.log('USER DATA', payload)
 
-      let result = await requestHTTP(`${this.URI}/api/menu/${this.props.id}?_method=put`, 'post', payload)
-      console.log('ORDER CREATION >>', result)
+      // validate fields
+      if (payload.name !== '' &&
+          payload.description !== '' &&
+          payload.price !== 0 &&
+          payload.photo !== '') {
+
+        let result = await requestHTTP(`${this.URI}/api/menu`, 'post', payload)
+        console.log('ORDER CREATION >>', result)
+
+        // Clean status
+        this.setState({ name: '' })
+        this.setState({ description: '' })
+        this.setState({ price: 0 })
+        this.setState({ photo: '' })
+
+      } else {
+        console.log('Error, fields are required')
+      }
 
     } catch (err) {
       console.log('Error API', err)
@@ -108,7 +95,7 @@ class FoodEdit extends React.Component {
             </div>
             <div className="form-group">
               <label for="price">price</label>
-              <input type="text" className="form-control" name="price" id="price" aria-describedby="nameHelp" placeholder="Ingresar el price" value={this.state.price} onChange={this.handleChange}/>
+              <input type="number" className="form-control" name="price" id="price" aria-describedby="nameHelp" placeholder="Ingresar el price" value={this.state.price} onChange={this.handleChange}/>
             </div>
             <div className="form-group">
               <label for="photo">photo</label>
@@ -116,6 +103,7 @@ class FoodEdit extends React.Component {
             </div>
           </form>
           <div>
+            <p>All fields are requiered</p>
             <button onClick={this.updateUserData} type="button" className="btn btn-success">Save</button>
           </div>
         </div>
@@ -124,4 +112,4 @@ class FoodEdit extends React.Component {
   }
 }
 
-export default FoodEdit
+export default FoodCreate
