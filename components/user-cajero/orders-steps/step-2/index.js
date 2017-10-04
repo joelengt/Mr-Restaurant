@@ -3,20 +3,24 @@ import stylesheet from './style.scss'
 import request from 'request-promise'
 import {requestHTTP} from '../../../../utils'
 
+let waySteps = { step1: 1, step2: 2, step3: 3 }
+
 class Cajero extends React.Component {
   constructor(props) {
     super(props)
     // This binding is necessary to make `this` work in the callback
     this.URI = 'http://localhost:3000'
     this.handleNextButton = this.handleNextButton.bind(this)
-    this.handleChange = this.handleChange.bind(this);
+    this.handleChange = this.handleChange.bind(this)
+    this.handlePrevButton = this.handlePrevButton.bind(this)
+    this.handleCancel = this.handleCancel.bind(this)
 
     this.state = { nextButton: false, name: '', dni: '', payment: ''}
   }
 
   async handleNextButton() {
     console.log('FINAL DATO to send')
-    let OrderID = '59cfecdcde6c07b4dcf92218'
+    let OrderID = '59cfe17444dfabb484af6ea0'
 
     try {
       let clientData = {
@@ -38,9 +42,15 @@ class Cajero extends React.Component {
       let result = await requestHTTP(`${this.URI}/api/orders/${OrderID}?_method=put`, 'post', payload)
       console.log('ORDER CREATION >>', result)
 
+      this.props.currentStep(waySteps.step3)
+
     } catch (err) {
       console.log('Error API', err)
     }
+  }
+
+  handlePrevButton() {
+    this.props.currentStep(waySteps.step1)
   }
 
   handleChange(e) {
@@ -61,19 +71,25 @@ class Cajero extends React.Component {
     }
   }
 
+  async handleCancel() {
+    console.log('FINAL DATO to send')
+    let OrderID = '59cfe17444dfabb484af6ea0'
+
+    try {
+      let result = await requestHTTP(`${this.URI}/api/orders/${OrderID}?_method=delete`, 'post')
+      console.log('ORDER CREATION >>', result)
+
+      this.props.currentStep(waySteps.step1)
+
+    } catch (err) {
+      console.log('Error API', err)
+    }
+  }
+
   render() {
     return (
       <div className="Cajero">
         <style dangerouslySetInnerHTML={{__html: stylesheet}}/>
-        <div className="Cajero__top">
-          <div>
-            <h2>Cajero - step2</h2>
-          </div>
-          <div>
-            <p>Items: 6</p>
-            <p>Total: S/36.00</p>
-          </div>
-        </div>
         <div className="Cajero__list">
           <div className="Cajero__list-container">
             <div>
@@ -113,8 +129,8 @@ class Cajero extends React.Component {
           </div>
         </div>
         <div className="Cajero__actions">
-          <button className="btn btn-primary">Back</button>
-          <button className="btn btn-danger">Cancelar</button>
+          <button onClick={ this.handleCancel } className="btn btn-danger">Cancelar</button>
+          <button onClick={ this.handlePrevButton } className="btn btn-primary">Back</button>
           <button onClick={ this.handleNextButton } className="btn btn-success">Siguiente</button>
         </div>
       </div>

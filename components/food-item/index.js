@@ -11,7 +11,7 @@ class FoodItem extends React.Component {
     super(props)
     this.URI = 'http://localhost:3000'
 
-    this.state = { isAdd: false, cant: 2, isEnabled: this.props.isEnabled, currentValue: this.props.isEnabled, showDetails: false }
+    this.state = { isAdd: false, cant: 1, isEnabled: this.props.isEnabled, currentValue: this.props.isEnabled, showDetails: false }
     // This binding is necessary to make `this` work in the callback
     this.handleStateClick = this.handleStateClick.bind(this)
     this.isEnabledToCant = this.isEnabledToCant.bind(this)
@@ -86,7 +86,7 @@ class FoodItem extends React.Component {
     console.log('id', typeof this.props.id)
 
     if (e.target.name === 'cant') {
-      // this.setState({ cant: Number(e.target.value) })
+      this.setState({ cant: Number(e.target.value) })
 
       // Find element, and update
       let array = this.props.getListFood()
@@ -117,7 +117,7 @@ class FoodItem extends React.Component {
   isEnabledToCant() {
     if (this.state.isAdd) {
       return (
-        <input type="number" name="cant" onChange={this.handleChangeState}/>
+        <input type="number" name="cant" onChange={this.handleChangeState} value={ this.state.cant }/>
       )
     }
   }

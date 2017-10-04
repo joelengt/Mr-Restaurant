@@ -11,27 +11,6 @@ app.prepare()
   .then(() => {
     const server = express()
 
-    server.get('/plataform/cajero/step-2/:id', (req, res) => {
-      let params = req.params
-      let query = req.query
-
-      return app.render(req, res, '/cajero-step2', Object.assign(params, query))
-    })
-
-    server.get('/plataform/cajero/step-3/:id', (req, res) => {
-      let params = req.params
-      let query = req.query
-
-      return app.render(req, res, '/cajero-step3', Object.assign(params, query))
-    })
-
-    server.get('/plataform/users', (req, res) => {
-      let params = req.params
-      let query = req.query
-
-      return app.render(req, res, '/users', Object.assign(params, query))
-    })
-
     server.get('*', (req, res) => {
       return handle(req, res)
     })
