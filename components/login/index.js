@@ -81,8 +81,8 @@ class Login extends React.Component {
               <style dangerouslySetInnerHTML={{__html: stylesheet}}/>
               <div className="Login__content">
                 <h2>Login</h2>
-                    <div>
-                      <div className="form-group">
+                  <div>
+                    <div className="form-group">
                       <label for="email">Email</label>
                       <input onChange={this.handleChange} type="email" className="form-control" name="email" aria-describedby="emailHelp" placeholder="Enter email"/>
                     </div>
@@ -96,9 +96,29 @@ class Login extends React.Component {
                     <div className="messageError">
                       {this.state.message}
                     </div>
-                  </div>
+                </div>
               </div>
-            </div>
+              <div className="Login__content">
+                <h4>Users Roles</h4>
+                <div>
+                  <div className="form-group">
+                    <u>Admin</u>
+                    <p><strong>email:</strong> admin@tekton.com</p>
+                    <p><strong>password:</strong> sample</p>
+                  </div>
+                  <div className="form-group">
+                    <u>Cajero</u>
+                    <p><strong>email:</strong> cajero@tekton.com</p>
+                    <p><strong>password:</strong> sample</p>
+                  </div>
+                  <div className="form-group">
+                    <u>Chef</u>
+                    <p><strong>email:</strong> chef@tekton.com</p>
+                    <p><strong>password:</strong> sample</p>
+                  </div>
+                </div>
+              </div>
+          </div>
           )
         break;
 
