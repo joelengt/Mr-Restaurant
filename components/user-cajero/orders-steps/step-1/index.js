@@ -42,6 +42,16 @@ class Cajero extends React.Component {
         }))
 
       } else {
+         let clientData = {
+          fullName: '',
+          dni: ''
+        }
+
+        // create client
+        let clientResult = await requestHTTP(`${this.URI}/api/clients`, 'post', clientData)
+        console.log('Client >>', clientResult.data.item)
+        let client = clientResult.data.item
+
         let payload = {
           "emisor": 1,
           "foods": listFood,
@@ -50,14 +60,13 @@ class Cajero extends React.Component {
             "igv": 2000,
             "subtotal": 5600,
             "total": 7600
-          }
+          },
+          "client": client
         }
 
+        // create order
         let result = await requestHTTP(`${this.URI}/api/orders`, 'post', payload)
         console.log('ORDER CREATION >>', result)
-
-        // reset listFood
-        // this.setListFood([])
 
         // update orders currentOrder
         this.props.updateCurrentOrder(result.data.item._id)

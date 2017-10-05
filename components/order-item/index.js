@@ -50,7 +50,7 @@ class OrderItem extends React.Component {
   }
 
   getFoodList(FoodList) {
-    console.log('Food list!!', FoodList)
+    console.log('Food list!! > ', FoodList)
     let result = FoodList.map((element) => {
       let food = element.item
       if (food) {

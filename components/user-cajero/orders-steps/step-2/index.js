@@ -21,15 +21,22 @@ class Cajero extends React.Component {
   async handleNextButton() {
     console.log('FINAL DATO to send')
     let OrderID = this.props.getCurrentOrder()
+    let clientID = ''
+    try { 
 
-    try {
+      // Get order data
+      let order = await requestHTTP(`${this.URI}/api/orders/${OrderID}`, 'get')
+
+      // clientID
+      clientID = order.client._id
+
       let clientData = {
         fullName: this.state.name,
         dni: this.state.dni
       }
 
-      // create client
-      let clientResult = await requestHTTP(`${this.URI}/api/clients`, 'post', clientData)
+      // update client
+      let clientResult = await requestHTTP(`${this.URI}/api/clients/${clientID}`, 'post', clientData)
       console.log('Client >>', clientResult.data.item)
       let client = clientResult.data.item
 

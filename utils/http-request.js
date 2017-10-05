@@ -13,7 +13,7 @@ export async function requestHTTP (uri, method, body, token) {
     return result
 
   } catch (err) {
-    console.log('Error API', err)
-    return err
+    console.log('Error API MODULE REQUEST', err)
+    return err.response.body
   }
 }

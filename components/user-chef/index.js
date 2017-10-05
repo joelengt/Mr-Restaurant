@@ -26,46 +26,6 @@ class Chef extends React.Component {
     return this.foodList
   }
 
-  // async handleNextButton() {
-  //   console.log('FINAL DATO >> ', this.getListFood())
-  //   try {
-  //
-  //     let listFood = this.getListFood()
-  //
-  //     // send event only if  list food, has content
-  //     if (!listFood.length) {
-  //       console.log('Error listFood', listFood.length)
-  //       this.setState(prevState => ({
-  //         nextButton: false
-  //       }))
-  //
-  //     } else {
-  //       let payload = {
-  //         "emisor": 1,
-  //         "foods": listFood,
-  //         "paymentMethod": "Cash",
-  //         "summary": {
-  //           "igv": 2000,
-  //           "subtotal": 5600,
-  //           "total": 7600
-  //         }
-  //       }
-  //
-  //       let result = await requestHTTP(`${this.URI}/api/orders`, 'post', payload)
-  //       console.log('ORDER CREATION >>', result)
-  //
-  //       // reset listFood
-  //       // this.setListFood([])
-  //
-  //       this.setState(prevState => ({
-  //         nextButton: true
-  //       }))
-  //     }
-  //   } catch (err) {
-  //     console.log('Error API', err)
-  //   }
-  // }
-
   render() {
     return (
       <div className="Chef">

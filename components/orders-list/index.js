@@ -50,7 +50,13 @@ class OrderList extends React.Component {
 
   getData(data) {
     let response = data.map((element) => {
-      return <OrderItem id={element._id} key={element._id} client={element.client} summary={element.summary} food={element.foods} userType={this.props.userType}/>
+      if (this.props.userType === 'admin') {
+        return <OrderItem id={element._id} key={element._id} client={element.client} summary={element.summary} food={element.foods} userType={this.props.userType}/>
+      } else {
+        if (element.isEnabled) {
+          return <OrderItem id={element._id} key={element._id} client={element.client} summary={element.summary} food={element.foods} userType={this.props.userType}/>
+        }
+      }
     })
 
     return response
