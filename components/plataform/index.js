@@ -4,26 +4,30 @@ import UserCajero from '../user-cajero'
 import UserChef from '../user-chef'
 import UserAdmin from '../user-admin'
 
-
-let userOptions = ['cajero', 'chef', 'admin']
+let userOptions = {
+  admin: 1,
+  cajero: 2,
+  chef: 3
+}
 
 class Plataform extends React.Component {
-  getUserView () {
-    let userView = userOptions[2]
 
-    if (userView === 'cajero') {
+  getUserView () {
+    let userView = this.props.userAccess
+
+    if (userView === userOptions.cajero) {
       return (<UserCajero/>)
 
-    } else if (userView === 'chef') {
+    } else if (userView === userOptions.chef) {
       return (<UserChef/>)
 
-    } else if (userView === 'admin') {
+    } else if (userView === userOptions.admin) {
       return (<UserAdmin/>)
 
     } else {
       return (
         <div className="Plataform">
-          401
+          401 - Ud No tiene acceso
         </div>
       )
     }
