@@ -70,7 +70,7 @@ class FoodList extends React.Component {
 
   getData(data) {
     let response = data.map((element) => {
-      return <FoodItem updateViewState={this.updateViewState} updateFoodDetails={this.updateFoodDetails} id={element._id} key={element._id} name={element.name} description={element.description} photo={element.photo} price={element.price} isEnabled={element.isEnabled} getListFood={ this.getListFood } setListFood={ this.setListFood } userType={this.props.userType}/>
+      return <FoodItem getItemsQuantity={this.props.getItemsQuantity} updateItemsQuantity={this.props.updateItemsQuantity} getitemsBillTotal={this.props.getitemsBillTotal} updateitemsBillTotal={this.props.updateitemsBillTotal} updateViewState={this.updateViewState} updateFoodDetails={this.updateFoodDetails} id={element._id} key={element._id} name={element.name} description={element.description} photo={element.photo} price={element.price} isEnabled={element.isEnabled} getListFood={ this.getListFood } setListFood={ this.setListFood } userType={this.props.userType}/>
     })
 
     return response

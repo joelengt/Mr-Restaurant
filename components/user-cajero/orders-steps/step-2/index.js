@@ -25,9 +25,13 @@ class Cajero extends React.Component {
     try { 
 
       // Get order data
-      let order = await requestHTTP(`${this.URI}/api/orders/${OrderID}`, 'get')
+      let response = await requestHTTP(`${this.URI}/api/orders/${OrderID}`, 'get')
+
+      console.log('Data', response.data.item)
 
       // clientID
+      let order = response.data.item
+
       clientID = order.client._id
 
       let clientData = {
@@ -36,7 +40,7 @@ class Cajero extends React.Component {
       }
 
       // update client
-      let clientResult = await requestHTTP(`${this.URI}/api/clients/${clientID}`, 'post', clientData)
+      let clientResult = await requestHTTP(`${this.URI}/api/clients/${clientID}?_method=put`, 'post', clientData)
       console.log('Client >>', clientResult.data.item)
       let client = clientResult.data.item
 
@@ -81,6 +85,11 @@ class Cajero extends React.Component {
   async handleCancel() {
     console.log('FINAL DATO to send')
     let OrderID = this.props.getCurrentOrder()
+
+    // Clean Items
+    this.props.updateItemsQuantity(0)
+    // Clean Pricing
+    this.props.updateitemsBillTotal(0)
 
     try {
       let result = await requestHTTP(`${this.URI}/api/orders/${OrderID}?_method=delete`, 'post')

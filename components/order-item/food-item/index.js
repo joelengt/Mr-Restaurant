@@ -6,11 +6,16 @@ class FoodItem extends React.Component {
     super(props)
   }
 
+  getPricePretty(num) {
+    let pretty = (num/100).toFixed(2)
+    return `S/${pretty}`
+  }
+
   isAdmin() {
     if (this.props.userType === 'admin') {
       return (
         <td>
-          <p>S/{this.props.price}</p>
+          <p>{this.getPricePretty(this.props.price)}</p>
         </td>
       )
     }

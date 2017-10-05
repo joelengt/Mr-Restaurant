@@ -20,7 +20,14 @@ class Cajero extends React.Component {
     this.getCurrentOrder = this.getCurrentOrder.bind(this)
     this.updateCurrentOrder = this.updateCurrentOrder.bind(this)
 
-    this.state = { nextButton: false, currentStep: waySteps.step1, currentOrder: '' }
+    this.getItemsQuantity = this.getItemsQuantity.bind(this)
+    this.updateItemsQuantity = this.updateItemsQuantity.bind(this)
+
+    this.getitemsBillTotal = this.getitemsBillTotal.bind(this)
+    this.updateitemsBillTotal = this.updateitemsBillTotal.bind(this)
+
+
+    this.state = { nextButton: false, currentStep: waySteps.step1, currentOrder: '', itemsQuantity: 0, itemsBillTotal: 0 }
   }
 
   updateCurrentStep(step) {
@@ -39,20 +46,45 @@ class Cajero extends React.Component {
     return this.state.currentOrder
   }
 
+  getItemsQuantity() {
+    return this.state.itemsQuantity
+  }
+
+  updateItemsQuantity(quantity) {
+    this.setState(prevState => ({
+      itemsQuantity: quantity
+    }))
+  }
+
+  getitemsBillTotal() {
+    return this.state.itemsBillTotal
+  }
+
+  updateitemsBillTotal(price) {
+    this.setState(prevState => ({
+      itemsBillTotal: price
+    }))
+  }
+
   eventCurrentStep() {
     switch (this.state.currentStep) {
       case waySteps.step1:
-        return (<Step1 currentStep={this.updateCurrentStep} updateCurrentOrder={this.updateCurrentOrder} getCurrentOrder={this.getCurrentOrder}/>)
+        return (<Step1 getItemsQuantity={this.getItemsQuantity} getitemsBillTotal={this.getitemsBillTotal} updateItemsQuantity={this.updateItemsQuantity} updateitemsBillTotal={this.updateitemsBillTotal} currentStep={this.updateCurrentStep} updateCurrentOrder={this.updateCurrentOrder} getCurrentOrder={this.getCurrentOrder}/>)
         break;
 
       case waySteps.step2:
-        return (<Step2 currentStep={this.updateCurrentStep} updateCurrentOrder={this.updateCurrentOrder} getCurrentOrder={this.getCurrentOrder}/>)
+        return (<Step2 updateItemsQuantity={this.updateItemsQuantity} updateitemsBillTotal={this.updateitemsBillTotal} currentStep={this.updateCurrentStep} updateCurrentOrder={this.updateCurrentOrder} getCurrentOrder={this.getCurrentOrder}/>)
         break;
 
       case waySteps.step3:
-        return (<Step3 currentStep={this.updateCurrentStep} updateCurrentOrder={this.updateCurrentOrder} getCurrentOrder={this.getCurrentOrder}/>)
+        return (<Step3 updateItemsQuantity={this.updateItemsQuantity} updateitemsBillTotal={this.updateitemsBillTotal} getItemsQuantity={this.getItemsQuantity} getitemsBillTotal={this.getitemsBillTotal} currentStep={this.updateCurrentStep} updateCurrentOrder={this.updateCurrentOrder} getCurrentOrder={this.getCurrentOrder}/>)
         break;
     }
+  }
+
+  getPricePretty(num) {
+    let pretty = (num/100).toFixed(2)
+    return `S/${pretty}`
   }
 
   render() {
@@ -64,8 +96,8 @@ class Cajero extends React.Component {
            <h2>Cajero - step { this.state.currentStep }</h2>
          </div>
          <div>
-           <p>Items: 6</p>
-           <p>Total: S/36.00</p>
+           <p>Items: { this.state.itemsQuantity }</p>
+           <p>Total: { this.getPricePretty(this.state.itemsBillTotal) }</p>
          </div>
         </div>
         <div>

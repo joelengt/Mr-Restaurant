@@ -44,6 +44,12 @@ class Cajero extends React.Component {
   async handleNextButton() {
     console.log('FINAL DATO to send')
     let OrderID = this.props.getCurrentOrder()
+
+    // Clean Items
+    this.props.updateItemsQuantity(0)
+    // Clean Pricing
+    this.props.updateitemsBillTotal(0)
+    
     try {
       let payload = {
         "isEnabled": true
@@ -71,11 +77,21 @@ class Cajero extends React.Component {
     return result
   }
 
+  getPricePretty(num) {
+    let pretty = (num/100).toFixed(2)
+    return `S/${pretty}`
+  }
+
   getOrder() {
     let order = this.state.order;
     if (!order) {
       return (<p>Cargando...</p>)
     } else {
+
+      let igv = this.props.getitemsBillTotal() * 0.18
+      let subTotal = this.props.getitemsBillTotal() - igv
+      let total = this.props.getitemsBillTotal()
+
       return (<div className="Cajero__list-container">
         <div className="Cajero__list-summary">
           <h3>Orden NRA000{order._id}</h3>
@@ -99,9 +115,9 @@ class Cajero extends React.Component {
           </table>
          <div>
            <h4>Summary</h4>
-           <p>Sub Total: S/50.00</p>
-           <p>IGV (18%): S/4.00</p>
-           <p>Total: S/54.00</p>
+           <p>Sub Total: { this.getPricePretty(order.summary.subtotal) }</p>
+           <p>IGV (18%): { this.getPricePretty(order.summary.igv) }</p>
+           <p>Total: { this.getPricePretty(order.summary.total) }</p>
          </div>
         </div>
         <div>
@@ -118,6 +134,11 @@ class Cajero extends React.Component {
   async handleCancel() {
     console.log('FINAL DATO to send')
     let OrderID = this.props.getCurrentOrder()
+
+    // Clean Items
+    this.props.updateItemsQuantity(0)
+    // Clean Pricing
+    this.props.updateitemsBillTotal(0)
 
     try {
       let result = await requestHTTP(`${this.URI}/api/orders/${OrderID}?_method=delete`, 'post')

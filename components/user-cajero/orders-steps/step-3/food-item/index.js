@@ -6,6 +6,11 @@ class FoodItem extends React.Component {
     super(props)
   }
 
+  getPricePretty(num) {
+    let pretty = (num/100).toFixed(2)
+    return `S/${pretty}`
+  }
+
   render() {
     return (
       <tr>
@@ -16,7 +21,7 @@ class FoodItem extends React.Component {
           <p>{this.props.cant}</p>
         </td>
         <td>
-          <p>S/{this.props.price}</p>
+          <p>{ this.getPricePretty(this.props.price) }</p>
         </td>
       </tr>
     )

@@ -14,6 +14,8 @@ class Cajero extends React.Component {
     this.handleNextButton = this.handleNextButton.bind(this)
     this.setListFood = this.setListFood.bind(this)
     this.getListFood = this.getListFood.bind(this)
+    this.handleCancel = this.handleCancel.bind(this)
+
     this.foodList = []
 
     this.state = { nextButton: false }
@@ -26,6 +28,15 @@ class Cajero extends React.Component {
 
   getListFood() {
     return this.foodList
+  }
+
+  handleCancel() {
+    console.log('cancel')
+    // Clean Items
+    this.props.updateItemsQuantity(0)
+    // Clean Pricing
+    this.props.updateitemsBillTotal(0)
+
   }
 
   async handleNextButton() {
@@ -52,14 +63,20 @@ class Cajero extends React.Component {
         console.log('Client >>', clientResult.data.item)
         let client = clientResult.data.item
 
+        let igv = this.props.getitemsBillTotal() * 0.18
+        let subTotal = this.props.getitemsBillTotal() - igv
+        let total = this.props.getitemsBillTotal()
+        let quantity = this.props.getItemsQuantity()
+
         let payload = {
           "emisor": 1,
           "foods": listFood,
           "paymentMethod": "Cash",
           "summary": {
-            "igv": 2000,
-            "subtotal": 5600,
-            "total": 7600
+            "items": quantity,
+            "igv": igv,
+            "subtotal": subTotal,
+            "total": total
           },
           "client": client
         }
@@ -90,13 +107,12 @@ class Cajero extends React.Component {
         <div className="Cajero__list">
           <div className="Cajero__list-container">
             <h2>Menu del día</h2>
-            <FoodList getListFood={ this.getListFood } setListFood={ this.setListFood } userType="chef"/>
+            <FoodList getItemsQuantity={this.props.getItemsQuantity} updateItemsQuantity={this.props.updateItemsQuantity} getitemsBillTotal={this.props.getitemsBillTotal} updateitemsBillTotal={this.props.updateitemsBillTotal}  getListFood={ this.getListFood } setListFood={ this.setListFood } userType="chef"/>
           </div>
         </div>
         <div className="Cajero__actions">
-          <button type="button" className="btn btn-danger">Cancelar</button>
+          <button onClick={ this.handleCancel } type="button" className="btn btn-danger">Cancelar</button>
           <button onClick={ this.handleNextButton } type="button" className="btn btn-success">Siguiente</button>
-          <p>{ this.state.nextButton ? 'Enviado' : 'Not' }</p>
         </div>
       </div>
     )

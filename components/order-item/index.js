@@ -61,15 +61,20 @@ class OrderItem extends React.Component {
     return result
   }
 
+  getPricePretty(num) {
+    let pretty = (num/100).toFixed(2)
+    return `S/${pretty}`
+  }
+
   isAdmin() {
     if (this.userType === 'admin') {
       return (
         <div>
           <b>Summary</b>
-          <p>Items: 4</p>
-          <p>IGV: { this.props.summary.igv }</p>
-          <p>sub total: { this.props.summary.subtotal }</p>
-          <p>total: { this.props.summary.total }</p>
+          <p>quantity: { this.props.summary.items } </p>
+          <p>Sub Total: { this.getPricePretty(this.props.summary.subtotal) }</p>
+          <p>IGV (18%): { this.getPricePretty(this.props.summary.igv) }</p>
+          <p>Total: { this.getPricePretty(this.props.summary.total) }</p>
         </div>
       )
     }
@@ -138,7 +143,6 @@ class OrderItem extends React.Component {
             <p>Client: { this.props.client.fullName }</p>
             <p>DNI: { this.props.client.dni }</p>
           </div>
-          { this.isAdmin() }
           <div>
             <b>List Food</b>
             <table>
@@ -154,6 +158,7 @@ class OrderItem extends React.Component {
               { this.getFoodList(this.props.food) }
             </table>
           </div>
+          { this.isAdmin() }
           <div>
             { this.isChefToUpdateState() }
           </div>

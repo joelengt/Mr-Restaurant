@@ -34,6 +34,17 @@ class FoodItem extends React.Component {
       let array = this.props.getListFood()
       array.push({item: foodId, cant: this.state.cant})
 
+      // updade items quantity
+      let currentItemsQuantity = this.props.getItemsQuantity()
+      currentItemsQuantity += this.state.cant
+      this.props.updateItemsQuantity(currentItemsQuantity)
+
+      // update pricing
+      let currentPricing = this.props.getitemsBillTotal()
+      currentPricing += this.props.price
+      this.props.updateitemsBillTotal(currentPricing)
+
+
       // update array list
       this.props.setListFood(array)
 
@@ -48,8 +59,22 @@ class FoodItem extends React.Component {
         return element.item === foodId
       })
 
+      // update items quantity
+      let currentItemsQuantity = this.props.getItemsQuantity()
+      currentItemsQuantity -= this.state.cant
+      this.props.updateItemsQuantity(currentItemsQuantity)
+
+      // update pricing
+      let currentPricing = this.props.getitemsBillTotal()
+      currentPricing -= (this.props.price * this.state.cant)
+      this.props.updateitemsBillTotal(currentPricing)
+
       // update array list
       this.props.setListFood(array)
+
+      this.setState(prevState => ({
+        cant: 1
+      }))
 
       this.setState(prevState => ({
         isAdd: !prevState.isAdd
@@ -86,7 +111,8 @@ class FoodItem extends React.Component {
     console.log('id', typeof this.props.id)
 
     if (e.target.name === 'cant') {
-      this.setState({ cant: Number(e.target.value) })
+
+      let newQuantity = Number(e.target.value)
 
       // Find element, and update
       let array = this.props.getListFood()
@@ -96,11 +122,25 @@ class FoodItem extends React.Component {
         return element.item === this.props.id
       })
 
+      // Update quantity items
+      let currentItemsQuantity = this.props.getItemsQuantity()
+      currentItemsQuantity -= this.state.cant
+      currentItemsQuantity += newQuantity
+      this.props.updateItemsQuantity(currentItemsQuantity)
+
+      // Update pricing 
+      let currentPricing = this.props.getitemsBillTotal()
+      currentPricing -= (this.props.price * this.state.cant)
+      currentPricing += (this.props.price * newQuantity)
+      this.props.updateitemsBillTotal(currentPricing)
+
       // Add new food item
-      array.push({item: this.props.id, cant: Number(e.target.value)})
+      array.push({item: this.props.id, cant: newQuantity})
 
       // Update food list
       this.props.setListFood(array)
+
+      this.setState({ cant: newQuantity })
 
     } else if (e.target.name === 'selectState') {
       let value = false
@@ -117,7 +157,7 @@ class FoodItem extends React.Component {
   isEnabledToCant() {
     if (this.state.isAdd) {
       return (
-        <input type="number" name="cant" onChange={this.handleChangeState} value={ this.state.cant }/>
+        <input type="number" name="cant" onChange={this.handleChangeState} value={ this.state.cant } min="1"/>
       )
     }
   }
@@ -191,6 +231,11 @@ class FoodItem extends React.Component {
     }
   }
 
+  getPricePretty(num) {
+    let pretty = (num/100).toFixed(2)
+    return `S/${pretty}`
+  }
+
   render() {
     return (
       <article className="Cajero__list-item">
@@ -204,7 +249,7 @@ class FoodItem extends React.Component {
           <div>
             { this.isEnabledToSale() }
           </div>
-          <p className="pricing">S/{ this.props.price }</p>
+          <p className="pricing">{ this.getPricePretty(this.props.price) }</p>
           <p className="description">{ this.props.description }</p>
           <div>
             { this.isAdminToUpdateState() }

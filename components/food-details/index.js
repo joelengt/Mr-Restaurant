@@ -60,6 +60,11 @@ class FoodDetails extends React.Component {
     }
   }
 
+  getPricePretty(num) {
+    let pretty = (num/100).toFixed(2)
+    return `S/${pretty}`
+  }
+
   render() {
     let food = this.state.food
 
@@ -74,7 +79,7 @@ class FoodDetails extends React.Component {
                 <h2>id: { food._id }</h2>
                 <p>{ food.name }</p>
                 <p>{ food.description }</p>
-                <p>S/{ food.price }</p>
+                <p>{ this.getPricePretty(food.price) }</p>
                 <p>{ food.fechaCreada }</p>
               </div>
               <div>
