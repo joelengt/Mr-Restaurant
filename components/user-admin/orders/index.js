@@ -12,9 +12,6 @@ class Index extends React.Component {
     return (
       <div>
         <h2>Orders</h2>
-        <div>
-          <input type="date"/>
-        </div>
         <OrdersList userType="admin"/>
         <div>
           <p>Ventas del día: 159</p>

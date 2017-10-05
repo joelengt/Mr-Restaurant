@@ -13,7 +13,7 @@ class UserCreate extends React.Component {
     super(props)
     this.URI = 'http://localhost:3000'
 
-    this.state = { showDetails: false, user: {}, name: '', lastName: '', email: '', phone: '', dni: '', photo: '', password: '', selectState: 3}
+    this.state = { showDetails: false, user: {}, name: '', lastName: '', email: '', phone: '', dni: '', photo: '', password: '', selectState: 3, message: ''}
 
     this.handleChange = this.handleChange.bind(this)
     this.updateUserData = this.updateUserData.bind(this)
@@ -79,17 +79,24 @@ class UserCreate extends React.Component {
         let result = await requestHTTP(`${this.URI}/api/users`, 'post', payload)
         console.log('ORDER CREATION >>', result)
 
-        this.setState({ name: '' })
-        this.setState({ lastName: '' })
-        this.setState({ email: '' })
-        this.setState({ phone: '' })
-        this.setState({ dni: '' })
-        this.setState({ photo: '' })
-        this.setState({ password: '' })
+        if (result.state === 201) {
+           // clean states
+          this.setState({ name: '' })
+          this.setState({ lastName: '' })
+          this.setState({ email: '' })
+          this.setState({ phone: '' })
+          this.setState({ dni: '' })
+          this.setState({ photo: '' })
+          this.setState({ password: '' })
 
+          this.setState({ message: ''})
+
+        } else {
+          this.setState({ message: result.message })
+        }
 
       } else {
-        console.log('Error all the fields are required')
+        this.setState({ message: 'All the fields are required' })
       }
 
     } catch (err) {
@@ -150,6 +157,9 @@ class UserCreate extends React.Component {
           </form>
           <div>
             <button onClick={this.updateUserData} type="button" className="btn btn-success">Save</button>
+          </div>
+          <div>
+            { this.state.message }
           </div>
         </div>
       </article>

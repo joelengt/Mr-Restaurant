@@ -13,7 +13,7 @@ class FoodCreate extends React.Component {
     super(props)
     this.URI = 'http://localhost:3000'
 
-    this.state = { showDetails: false, user: {}, name: '', description: '', price: 0, photo: '' }
+    this.state = { showDetails: false, user: {}, name: '', description: '', price: 0, photo: '', message: '' }
 
     this.handleChange = this.handleChange.bind(this)
     this.updateUserData = this.updateUserData.bind(this)
@@ -64,14 +64,22 @@ class FoodCreate extends React.Component {
         let result = await requestHTTP(`${this.URI}/api/menu`, 'post', payload)
         console.log('ORDER CREATION >>', result)
 
-        // Clean status
-        this.setState({ name: '' })
-        this.setState({ description: '' })
-        this.setState({ price: 0 })
-        this.setState({ photo: '' })
+        if (result.status === 201) {
+          // Clean status
+          this.setState({ name: '' })
+          this.setState({ description: '' })
+          this.setState({ price: 0 })
+          this.setState({ photo: '' })
+
+          this.setState({ message: ''})
+
+
+        } else {
+          this.setState({ message: result.message })
+        }
 
       } else {
-        console.log('Error, fields are required')
+        this.setState({ message: 'All the fields are required' })
       }
 
     } catch (err) {
@@ -103,8 +111,10 @@ class FoodCreate extends React.Component {
             </div>
           </form>
           <div>
-            <p>All fields are requiered</p>
             <button onClick={this.updateUserData} type="button" className="btn btn-success">Save</button>
+          </div>
+          <div>
+            { this.state.message }
           </div>
         </div>
       </article>
