@@ -21,7 +21,7 @@ class OrderItem extends React.Component {
 
   async handleStateClick() {
     console.log('FINAL DATO to send')
-    let OrderID = '59cfecdcde6c07b4dcf92218'
+    let OrderID = this.props.id
 
     try {
       // update order
