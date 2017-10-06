@@ -1,8 +1,9 @@
 .options {
   background: white;
   width: 100%;
-  text-align: left;
-  padding: .3rem;
+  text-align: center;
+  padding: .6rem;
+  padding-top: 1.5rem;
 }
 
 .options ul li {
@@ -10,8 +11,8 @@
   list-style: none;
   padding: .4rem .5rem;
   border-radius: 10px;
-  border: 2px solid #bd1d65;
-  color: #bd1d65;
+  border: 2px solid #01cba9;
+  color: #01cba9;
   margin-right: .5rem;
   cursor: pointer;
 }

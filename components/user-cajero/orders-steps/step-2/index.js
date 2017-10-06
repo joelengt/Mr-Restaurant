@@ -2,6 +2,7 @@ import React from 'react'
 import stylesheet from './style.scss'
 import request from 'request-promise'
 import {requestHTTP} from '../../../../utils'
+import config from '../../../../config.js'
 
 let waySteps = { step1: 1, step2: 2, step3: 3 }
 
@@ -9,7 +10,7 @@ class Cajero extends React.Component {
   constructor(props) {
     super(props)
     // This binding is necessary to make `this` work in the callback
-    this.URI = 'http://localhost:3000'
+    this.URI = config.url
     this.handleNextButton = this.handleNextButton.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.handlePrevButton = this.handlePrevButton.bind(this)
@@ -108,9 +109,9 @@ class Cajero extends React.Component {
         <style dangerouslySetInnerHTML={{__html: stylesheet}}/>
         <div className="Cajero__list">
           <div className="Cajero__list-container">
-            <div>
+            <div className="Cajero__list-info">
               <form>
-                <div className="">
+                <div>
                   <div>
                     <h2>Datos del Client</h2>
                   </div>

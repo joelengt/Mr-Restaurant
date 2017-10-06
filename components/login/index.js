@@ -3,13 +3,14 @@ import stylesheet from './style.scss'
 import {requestHTTP} from '../../utils'
 import Router from 'next/router'
 import Plataform from '../plataform'
+import config from '../../config.js'
 
 let wayView = { login: 'login', plataform: 'plataform' }
 
 class Login extends React.Component {
   constructor(props) {
     super(props)
-    this.URI = 'http://localhost:3000'
+    this.URI = config.url
 
     this.state = { email: '', password: '', message: '', accessToken: '', refreshToken: '', currentView: wayView.login, userAccess: 0 }
 
@@ -39,6 +40,10 @@ class Login extends React.Component {
         this.setState({ refreshToken: result.data.refresh_token })
 
         this.setState({ userAccess: result.data.userAccess })
+
+        console.log('Datos >>>>', result.data)
+
+        this.props.currentUserAuth(true, result.data)
 
         // redirect /plataform
         this.setState({ currentView: wayView.plataform })
@@ -73,7 +78,6 @@ class Login extends React.Component {
   }
 
   render() {
-
     switch (this.state.currentView) {
       case wayView.login:
         return (

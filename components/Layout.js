@@ -12,6 +12,7 @@ const BaseLayout = (props) => (
       <meta name="theme-color" content="#0000ff"/>
       <title>{props.title}</title>
       <meta charSet='utf-8'/>
+      <link rel="icon" type="image/png" href="/static/images/piq_182876_400x400.png" />
       <meta name="viewport"
             content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no"/>
       <link href="//fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet"/>
@@ -19,7 +20,7 @@ const BaseLayout = (props) => (
       <style dangerouslySetInnerHTML={{__html: stylesheet}}/>
     </Head>
     <Content>
-      <Header/>
+      <Header auth={ props.auth } userAuth={ props.userAuth }/>
       <div>
         {props.children}
       </div>

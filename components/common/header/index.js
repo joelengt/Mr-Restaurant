@@ -2,20 +2,29 @@ import React from 'react'
 import stylesheet from './style.scss'
 
 class Header extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+
   isLogin () {
-    let auth = true
+    let auth = this.props.auth
     if (!auth) {
       return (
         <div></div>
       )
     }
+
+    console.log('USER HEADER', this.props.userAuth)
     return (
       <div>
         <div className="name">
-          <p> Joel Gonzales</p>
+          <a href="/">Salir</a>
+        </div>
+        <div className="name">
+          <p>{this.props.userAuth.name}</p>
         </div>
         <div className="avatar">
-          <img src="http://www.mujeremprendedoralac.org/dev/wp-content/uploads/2015/10/cropped-ICONOpeque%C3%B1o.png"></img>
+          <img src={this.props.userAuth.avatar || '/static/images/User-Profile.png'}></img>
         </div>
       </div>
     )
@@ -28,10 +37,10 @@ class Header extends React.Component {
         <div className="Header__container  row">
           <div className="Header__container--logotipo  col">
             <div className="Header__container--logo">
-              <img src="http://www.mujeremprendedoralac.org/dev/wp-content/uploads/2015/10/cropped-ICONOpeque%C3%B1o.png"/>
+              <img src="/static/images/Twemoji_1f35c.png"/>
             </div>
             <div className="Header__container--title">
-              <p>Don Restaurant</p>
+              <p>Mr Restaurant</p>
             </div>
           </div>
           <div className="Header__container--user  col">

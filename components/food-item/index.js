@@ -3,13 +3,14 @@ import stylesheet from './style.scss'
 import Link from 'next/link'
 import _ from 'lodash'
 import {requestHTTP} from '../../utils'
+import config from '../../config.js'
 
 let wayView = { mainList: 'mainList', details: 'details', edit: 'edit' }
 
 class FoodItem extends React.Component {
   constructor(props) {
     super(props)
-    this.URI = 'http://localhost:3000'
+    this.URI = config.url
 
     this.state = { isAdd: false, cant: 1, isEnabled: this.props.isEnabled, currentValue: this.props.isEnabled, showDetails: false }
     // This binding is necessary to make `this` work in the callback
@@ -240,7 +241,7 @@ class FoodItem extends React.Component {
     return (
       <article className="Cajero__list-item">
         <div className="Cajero__list-item--cover">
-          <img src={this.props.photo}></img>
+          <img src={this.props.photo || '/static/images/food-outline.png'}></img>
         </div>
         <div className="Cajero__list-item--details">
           <h2 className="title">
@@ -249,11 +250,11 @@ class FoodItem extends React.Component {
           <div>
             { this.isEnabledToSale() }
           </div>
-          <p className="pricing">{ this.getPricePretty(this.props.price) }</p>
-          <p className="description">{ this.props.description }</p>
           <div>
             { this.isAdminToUpdateState() }
           </div>
+          <p className="pricing">{ this.getPricePretty(this.props.price) }</p>
+          <p className="description">{ this.props.description }</p>
           <div>
             { this.userActions() }
           </div>

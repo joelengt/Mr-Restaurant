@@ -7,6 +7,7 @@ import {requestHTTP} from '../../utils'
 import FoodDetails from '../food-details'
 import FoodEdit from '../food-edit'
 import FoodCreate from '../food-create'
+import config from '../../config.js'
 
 let wayView = { mainList: 'mainList', details: 'details', edit: 'edit', create: 'create' }
 
@@ -14,7 +15,7 @@ class FoodList extends React.Component {
   constructor(props) {
     super(props)
 
-    this.URI = 'http://localhost:3000'
+    this.URI = config.url
     this.state = { listFood: [], currentView: wayView.mainList, currentFoodDetails: '' }
 
     // This binding is necessary to make `this` work in the callback

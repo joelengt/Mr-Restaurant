@@ -6,6 +6,7 @@ import {requestHTTP} from '../../utils'
 import Step1 from './orders-steps/step-1'
 import Step2 from './orders-steps/step-2'
 import Step3 from './orders-steps/step-3'
+import config from '../../config.js'
 
 let waySteps = { step1: 1, step2: 2, step3: 3 }
 
@@ -13,7 +14,7 @@ class Cajero extends React.Component {
   constructor(props) {
     super(props)
     // This binding is necessary to make `this` work in the callback
-    this.URI = 'http://localhost:3000'
+    this.URI = config.url
   
     this.eventCurrentStep = this.eventCurrentStep.bind(this)
     this.updateCurrentStep = this.updateCurrentStep.bind(this)

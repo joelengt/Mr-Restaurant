@@ -4,6 +4,7 @@ import OrdersList from '../orders-list'
 import request from 'request-promise'
 import {requestHTTP} from '../../utils'
 import NavOptions from './nav-options'
+import config from '../../config.js'
 
 let data = [
   {
@@ -24,7 +25,7 @@ class Admin extends React.Component {
   constructor(props) {
     super(props)
     // This binding is necessary to make `this` work in the callback
-    this.URI = 'http://localhost:3000'
+    this.URI = config.url
     // this.handleNextButton = this.handleNextButton.bind(this)
     this.foodList = []
     this.state = { nextButton: false }

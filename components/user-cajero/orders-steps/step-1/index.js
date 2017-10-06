@@ -3,6 +3,7 @@ import stylesheet from './style.scss'
 import FoodList from '../../../food-list'
 import request from 'request-promise'
 import {requestHTTP} from '../../../../utils'
+import config from '../../../../config.js'
 
 let waySteps = { step1: 1, step2: 2, step3: 3 }
 
@@ -10,7 +11,7 @@ class Cajero extends React.Component {
   constructor(props) {
     super(props)
     // This binding is necessary to make `this` work in the callback
-    this.URI = 'http://localhost:3000'
+    this.URI = config.url
     this.handleNextButton = this.handleNextButton.bind(this)
     this.setListFood = this.setListFood.bind(this)
     this.getListFood = this.getListFood.bind(this)

@@ -3,6 +3,7 @@ import stylesheet from './style.scss'
 import UserCajero from '../user-cajero'
 import UserChef from '../user-chef'
 import UserAdmin from '../user-admin'
+import config from '../../config.js'
 
 let userOptions = {
   admin: 1,
@@ -11,6 +12,10 @@ let userOptions = {
 }
 
 class Plataform extends React.Component {
+  constructor(props) {
+    super(props)
+    this.URI = config.url
+  }
 
   getUserView () {
     let userView = this.props.userAccess

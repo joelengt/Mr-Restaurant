@@ -4,13 +4,14 @@ import Link from 'next/link'
 import _ from 'lodash'
 import {requestHTTP} from '../../utils'
 import request from 'request-promise'
+import config from '../../config.js'
 
 let wayView = { mainList: 'mainList', details: 'details', edit: 'edit' }
 
 class UserItem extends React.Component {
   constructor(props) {
     super(props)
-    this.URI = 'http://localhost:3000'
+    this.URI = config.url
 
     this.state = { showDetails: false, user: {}, isDeleted: false }
 

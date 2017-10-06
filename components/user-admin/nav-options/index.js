@@ -3,6 +3,7 @@ import stylesheet from './style.scss'
 import OrderView from '../orders'
 import Users from '../users'
 import MenuFood from '../menu-food'
+import config from '../../../config.js'
 
 class Index extends React.Component {
   constructor(props) {

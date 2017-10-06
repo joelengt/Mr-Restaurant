@@ -1,6 +1,6 @@
 .Header__container {
   height: 80px;
-  background: #5cdcff;
+  background: #01CBA9;
 }
 
 .Header__container--logotipo {
@@ -12,6 +12,8 @@
 .Header__container--logo {
   height: 100%;
   display: inline-block;
+  padding: 0.8rem;
+  padding-left: 1.5rem;
 }
 
 .Header__container--logo img {
@@ -27,7 +29,7 @@
 }
 
 .Header__container--title p {
-  margin-top: 1rem;
+  margin-top: 1.2rem;
   font-size: 2rem;
   color: white;
 }
@@ -39,11 +41,19 @@
 
 .Header__container--user .name {
   display: inline-block;
+  color: white;
+}
+
+.Header__container--user .name a {
+  padding-right: .5rem;
+  color: white;
 }
 
 .Header__container--user .avatar {
   display: inline-block;
   width: 50px;
+  padding-right: .5rem;
+  padding-top: .2rem;
 }
 
 .Header__container--user .avatar img {

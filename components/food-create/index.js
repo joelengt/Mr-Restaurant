@@ -4,14 +4,14 @@ import Link from 'next/link'
 import _ from 'lodash'
 import {requestHTTP} from '../../utils'
 import request from 'request-promise'
-
+import config from '../../config.js'
 
 let wayView = { mainList: 'mainList', details: 'details', edit: 'edit' }
 
 class FoodCreate extends React.Component {
   constructor(props) {
     super(props)
-    this.URI = 'http://localhost:3000'
+    this.URI = config.url
 
     this.state = { showDetails: false, user: {}, name: '', description: '', price: 0, photo: '', message: '' }
 
@@ -22,6 +22,8 @@ class FoodCreate extends React.Component {
   handleChange(e) {
     console.log('Element selected')
     console.log(e.target.name)
+
+    this.setState({ message: '' })
 
     if (e.target.name === 'name') {
       this.setState({ name: e.target.value })
@@ -50,7 +52,7 @@ class FoodCreate extends React.Component {
         name: this.state.name,
         description: this.state.description,
         price: this.state.price,
-        photo: this.state.photo
+        photo: this.state.photo || '/static/images/Fast-Food-icon.png'
       }
 
       console.log('USER DATA', payload)
@@ -58,8 +60,7 @@ class FoodCreate extends React.Component {
       // validate fields
       if (payload.name !== '' &&
           payload.description !== '' &&
-          payload.price !== 0 &&
-          payload.photo !== '') {
+          payload.price !== 0) {
 
         let result = await requestHTTP(`${this.URI}/api/menu`, 'post', payload)
         console.log('ORDER CREATION >>', result)
@@ -71,8 +72,7 @@ class FoodCreate extends React.Component {
           this.setState({ price: 0 })
           this.setState({ photo: '' })
 
-          this.setState({ message: ''})
-
+          this.setState({ message: 'Food Created!'})
 
         } else {
           this.setState({ message: result.message })

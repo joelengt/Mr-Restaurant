@@ -4,14 +4,14 @@ import Link from 'next/link'
 import _ from 'lodash'
 import {requestHTTP} from '../../utils'
 import request from 'request-promise'
-
+import config from '../../config.js'
 
 let wayView = { mainList: 'mainList', details: 'details', edit: 'edit' }
 
 class UserCreate extends React.Component {
   constructor(props) {
     super(props)
-    this.URI = 'http://localhost:3000'
+    this.URI = config.url
 
     this.state = { showDetails: false, user: {}, name: '', lastName: '', email: '', phone: '', dni: '', photo: '', password: '', selectState: 3, message: ''}
 
@@ -22,6 +22,8 @@ class UserCreate extends React.Component {
   handleChange(e) {
     console.log('Element selected')
     console.log(e.target.name)
+
+    this.setState({ message: '' })
 
     if (e.target.name === 'name') {
       this.setState({ name: e.target.value })
@@ -62,7 +64,7 @@ class UserCreate extends React.Component {
         email: this.state.email,
         phone: this.state.phone,
         dni: this.state.dni,
-        photo: this.state.photo,
+        photo: this.state.photo || '/static/images/businessman-xxl.png',
         password : this.state.password
       }
 
@@ -71,7 +73,6 @@ class UserCreate extends React.Component {
           payload.email !== '' &&
           payload.phone !== '' &&
           payload.dni !== '' &&
-          payload.photo !== '' &&
           payload.password !== '') {
 
         console.log('USER DATA', payload)
@@ -79,7 +80,7 @@ class UserCreate extends React.Component {
         let result = await requestHTTP(`${this.URI}/api/users`, 'post', payload)
         console.log('ORDER CREATION >>', result)
 
-        if (result.state === 201) {
+        if (result.status === 201) {
            // clean states
           this.setState({ name: '' })
           this.setState({ lastName: '' })
@@ -89,7 +90,7 @@ class UserCreate extends React.Component {
           this.setState({ photo: '' })
           this.setState({ password: '' })
 
-          this.setState({ message: ''})
+          this.setState({ message: 'User Created!'})
 
         } else {
           this.setState({ message: result.message })

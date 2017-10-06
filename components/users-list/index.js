@@ -7,13 +7,14 @@ import {requestHTTP} from '../../utils'
 import UserDetails from '../users-details'
 import UserEdit from '../users-edit'
 import UserCreate from '../users-create'
+import config from '../../config.js'
 
 let wayView = { mainList: 'mainList', details: 'details', edit: 'edit', create: 'create' }
 
 class UserList extends React.Component {
   constructor(props) {
     super(props)
-    this.URI = 'http://localhost:3000'
+    this.URI = config.url
     this.state = { userList: [], currentView: wayView.mainList, currentUserDetails: 0 }
     this.updateViewState = this.updateViewState.bind(this)
     this.updateUserDetails = this.updateUserDetails.bind(this)

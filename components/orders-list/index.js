@@ -4,12 +4,13 @@ import stylesheet from './style.scss'
 import request from 'request-promise'
 import Promise from 'bluebird'
 import {requestHTTP} from '../../utils'
+import config from '../../config.js'
 
 class OrderList extends React.Component {
   constructor(props) {
     super(props)
 
-    this.URI = 'http://localhost:3000'
+    this.URI = config.url
 
     // This binding is necessary to make `this` work in the callback
     this.setListFood = this.setListFood.bind(this)
@@ -54,7 +55,7 @@ class OrderList extends React.Component {
         return <OrderItem id={element._id} key={element._id} client={element.client} summary={element.summary} food={element.foods} userType={this.props.userType}/>
       } else {
         if (element.isEnabled) {
-          return <OrderItem id={element._id} key={element._id} client={element.client} summary={element.summary} food={element.foods} userType={this.props.userType}/>
+          return <OrderItem id={element._id} key={element._id} orderState={element.state} client={element.client} summary={element.summary} food={element.foods} userType={this.props.userType}/>
         }
       }
     })
